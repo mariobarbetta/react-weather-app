@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import "./bootstrap.min.css";
 import ShowCurrentWeather from "./components/ShowCurrentWeather";
 import ShowForecastWeather from "./components/ShowForecastWeather";
@@ -20,9 +21,8 @@ class App extends Component {
   }
 
   getCurrentWeather = () => {
+    this.addCityToList();
     let cityName = this.state.cityName;
-
-    console.log(process.env);
 
     if (cityName === "") {
       return;
@@ -63,6 +63,26 @@ class App extends Component {
     this.setState((state) => ({
       cityList: state.cityList.filter((city) => city.id !== id),
     }));
+  };
+
+  addCityToList = () => {
+    const newCity = this.state.cityName;
+
+    if (newCity === "") {
+      return;
+    }
+
+    const newCityListItem = { id: uuid(), cityListItem: newCity };
+    let cityListCopy = [...this.state.cityList];
+
+    if (!cityListCopy.some((city) => city.cityListItem === newCity)) {
+      cityListCopy.push(newCityListItem);
+
+      this.setState({
+        cityList: cityListCopy,
+      });
+    }
+    console.log(this.state.cityList);
   };
 
   render() {
