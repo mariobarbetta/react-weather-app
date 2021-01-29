@@ -17,7 +17,38 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.getCurrentWeather();
+    this.hydrateStateWithLocalStorage().then(this.getCurrentWeather);
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+
+    this.saveStateToLocalStorage();
+  }
+
+  hydrateStateWithLocalStorage() {
+    return new Promise((resolve, reject) => {
+      let cityListString = localStorage.getItem("cityList");
+      let cityListJSON = JSON.parse(cityListString);
+
+      try {
+        this.setState({ cityList: cityListJSON });
+      } catch (e) {
+        this.setState({ cityList: cityListJSON });
+      }
+      resolve();
+    });
+  }
+
+  saveStateToLocalStorage() {
+    localStorage.setItem("cityList", JSON.stringify(this.state.cityList));
   }
 
   getCurrentWeather = () => {
