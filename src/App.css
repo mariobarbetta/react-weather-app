@@ -42,3 +42,44 @@ ul {
   display: flex;
   justify-content: space-between;
 }
+
+/* slide out */
+.button {
+  border: none;
+  font-size: 1.2rem;
+  background: transparent;
+  padding-right: 20px;
+}
+
+.city-input {
+  margin: 15px;
+  border-radius: 20px;
+  padding-left: 10px;
+  border: none;
+  background-color: rgb(192, 191, 191);
+}
+
+input:focus {
+  outline: none;
+}
+
+.city-list {
+  margin: 0 0 1rem 1.7rem;
+  color: black;
+  font-size: 0.85rem;
+  width: 70%;
+}
+
+.city-list p {
+  display: flex;
+  justify-content: space-between;
+}
+.city-list p input {
+  border: none;
+  background: transparent;
+}
+
+input:hover {
+  color: rgb(255, 255, 255);
+  text-shadow: 3 3 1px white;
+}

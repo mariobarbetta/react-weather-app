@@ -4,6 +4,7 @@ import axios from "axios";
 import "./bootstrap.min.css";
 import ShowCurrentWeather from "./components/ShowCurrentWeather";
 import ShowForecastWeather from "./components/ShowForecastWeather";
+import UpdateCityName from "./components/UpdateCityName";
 
 class App extends Component {
   state = {
@@ -11,6 +12,7 @@ class App extends Component {
     isLoaded: false,
     cityName: "Seattle",
     dailyData: [],
+    cityList: [],
   };
 
   componentDidMount() {
@@ -53,6 +55,16 @@ class App extends Component {
     });
   };
 
+  cityNameChanged = (cityNameInput) => {
+    this.setState({ cityName: cityNameInput });
+  };
+
+  removeCityListItem = (id) => {
+    this.setState((state) => ({
+      cityList: state.cityList.filter((city) => city.id !== id),
+    }));
+  };
+
   render() {
     let { isLoaded } = this.state;
 
@@ -61,6 +73,13 @@ class App extends Component {
     } else {
       return (
         <div className="app-style">
+          <UpdateCityName
+            cityList={this.state.cityList}
+            cityName={this.state.cityName}
+            onSubmit={this.getCurrentWeather}
+            onCityNameChange={this.cityNameChanged}
+            onRemoveCityListItem={this.removeCityListItem}
+          />
           <ShowCurrentWeather
             currentWeather={this.state.currentWeather}
             cityName={this.state.cityName}
