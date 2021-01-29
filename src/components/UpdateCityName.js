@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Fade from "react-reveal/Fade";
 import "../App.css";
+import "../hamburger.css";
+import Hamburger from "react-hamburgers";
 
 class UpdateCityName extends Component {
   state = {
     showCityInput: false,
-    // hamburgerActive: false,
+    hamburgerActive: false,
   };
 
   handleChange = (e) => {
@@ -49,15 +51,16 @@ class UpdateCityName extends Component {
   render() {
     return (
       <div>
-        <button
-          onClick={() => {
-            this.setState((prevState) => ({
-              showCityInput: !prevState.showCityInput,
-            }));
-          }}
-        >
-          X
-        </button>
+        <Hamburger
+          active={this.state.hamburgerActive}
+          type="spin"
+          onClick={() =>
+            this.setState({
+              showCityInput: !this.state.showCityInput,
+              hamburgerActive: !this.state.hamburgerActive,
+            })
+          }
+        ></Hamburger>
 
         <Fade left when={this.state.showCityInput}>
           <div
