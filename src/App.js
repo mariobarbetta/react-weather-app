@@ -3,6 +3,7 @@ import "./App.css";
 import axios from "axios";
 import "./bootstrap.min.css";
 import ShowCurrentWeather from "./components/ShowCurrentWeather";
+import ShowForecastWeather from "./components/ShowForecastWeather";
 
 class App extends Component {
   state = {
@@ -18,7 +19,6 @@ class App extends Component {
 
   getCurrentWeather = () => {
     let cityName = this.state.cityName;
-    let apiKey = process.env.REACT_APP_API_KEY;
 
     console.log(process.env);
 
@@ -35,7 +35,22 @@ class App extends Component {
       });
     });
 
+    this.getForecastWeather();
+
     this.setState({ cityName: "" });
+  };
+
+  getForecastWeather = () => {
+    const forecastWeatherData = `http://api.openweathermap.org/data/2.5/forecast?q=${this.state.cityName}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`;
+
+    axios.get(forecastWeatherData).then((res) => {
+      const dailyData = res.data.list.filter((reading) =>
+        reading.dt_txt.includes("18:00:00")
+      );
+      this.setState({
+        dailyData: dailyData,
+      });
+    });
   };
 
   render() {
@@ -50,6 +65,7 @@ class App extends Component {
             currentWeather={this.state.currentWeather}
             cityName={this.state.cityName}
           />
+          <ShowForecastWeather dailyData={this.state.dailyData} />
         </div>
       );
     }

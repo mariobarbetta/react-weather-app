@@ -24,6 +24,12 @@ ul {
   list-style: none;
 }
 
+.center-forecast {
+  width: 280px;
+  margin: auto;
+  font-size: 0.7rem;
+}
+
 .smaller-text {
   font-size: 0.9rem;
 }
