@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import "./App.css";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
+import { Roller } from "react-css-spinners";
+import "./App.css";
 import "./bootstrap.min.css";
 import ShowCurrentWeather from "./components/ShowCurrentWeather";
 import ShowForecastWeather from "./components/ShowForecastWeather";
@@ -120,7 +121,11 @@ class App extends Component {
     let { isLoaded } = this.state;
 
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return (
+        <div className="spinner-container">
+          <Roller className="spinner" color="#a8a5a5" size={40} />
+        </div>
+      );
     } else {
       return (
         <div className="app-style">
