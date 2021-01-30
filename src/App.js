@@ -18,7 +18,8 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.hydrateStateWithLocalStorage().then(this.getCurrentWeather);
+    this.hydrateStateWithLocalStorage();
+    this.getCurrentWeather();
     window.addEventListener(
       "beforeunload",
       this.saveStateToLocalStorage.bind(this)
@@ -35,17 +36,10 @@ class App extends Component {
   }
 
   hydrateStateWithLocalStorage() {
-    return new Promise((resolve, reject) => {
-      let cityListString = localStorage.getItem("cityList");
-      let cityListJSON = JSON.parse(cityListString);
+    const cityListString = localStorage.getItem("cityList");
+    const cityListJSON = JSON.parse(cityListString);
 
-      try {
-        this.setState({ cityList: cityListJSON });
-      } catch (e) {
-        this.setState({ cityList: cityListJSON });
-      }
-      resolve();
-    });
+    this.setState({ cityList: cityListJSON });
   }
 
   saveStateToLocalStorage() {
@@ -100,7 +94,7 @@ class App extends Component {
   addCityToList = () => {
     const newCity = this.state.cityName;
 
-    if (newCity === "") {
+    if (newCity === "" || this.state.cityList.length === 0) {
       return;
     }
 
@@ -114,7 +108,6 @@ class App extends Component {
         cityList: cityListCopy,
       });
     }
-    console.log(this.state.cityList);
   };
 
   render() {
