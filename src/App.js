@@ -3,10 +3,10 @@ import axios from "axios";
 import { v4 as uuid } from "uuid";
 import { Roller } from "react-css-spinners";
 import "./App.css";
-import "./bootstrap.min.css";
 import ShowCurrentWeather from "./components/ShowCurrentWeather";
 import ShowForecastWeather from "./components/ShowForecastWeather";
 import UpdateCityName from "./components/UpdateCityName";
+import gsap from "gsap";
 
 class App extends Component {
   state = {
@@ -35,11 +35,24 @@ class App extends Component {
     this.saveStateToLocalStorage();
   }
 
+  fadeIns = () => {
+    const tl = gsap.timeline();
+    tl.from(".current-weather-container", { opacity: 0, duration: 3 });
+    tl.from(
+      ".day-card",
+      { opacity: 0, x: -200, stagger: 0.1, duration: 0.8 },
+      0.5
+    );
+  };
+
   hydrateStateWithLocalStorage() {
     const cityListString = localStorage.getItem("cityList");
     const cityListJSON = JSON.parse(cityListString);
 
     this.setState({ cityList: cityListJSON });
+    console.log(cityListString);
+    console.log(this.state.cityList);
+    console.log(cityListJSON);
   }
 
   saveStateToLocalStorage() {
@@ -54,14 +67,19 @@ class App extends Component {
       return;
     }
 
-    let currentWeatherData = `http://api.openweathermap.org/data/2.5/weather?q=${cityName},us&appid=${process.env.REACT_APP_API_KEY}&units=imperial`;
+    let currentWeatherData = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},us&appid=${process.env.REACT_APP_API_KEY}&units=imperial`;
 
-    axios.get(currentWeatherData).then((res) => {
-      this.setState({
-        isLoaded: true,
-        currentWeather: res.data,
-      });
-    });
+    axios
+      .get(currentWeatherData)
+      .then((res) => {
+        this.setState({
+          isLoaded: true,
+          currentWeather: res.data,
+        });
+      })
+      .then(this.fadeIns());
+
+    // this.fadeIns();
 
     this.getForecastWeather();
 
@@ -69,8 +87,8 @@ class App extends Component {
   };
 
   getForecastWeather = () => {
-    const forecastWeatherData = `http://api.openweathermap.org/data/2.5/forecast?q=${this.state.cityName}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`;
-
+    const forecastWeatherData = `https://api.openweathermap.org/data/2.5/forecast?q=${this.state.cityName}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`;
+    console.log(`in forecast weather ${this.state.cityList}`);
     axios.get(forecastWeatherData).then((res) => {
       const dailyData = res.data.list.filter((reading) =>
         reading.dt_txt.includes("18:00:00")
@@ -85,6 +103,11 @@ class App extends Component {
     this.setState({ cityName: cityNameInput });
   };
 
+  // fadeIns = () => {
+  //   const tl = gsap.timeline();
+  //   tl.from(".current-weather-container", { opacity: 0, duration: 1 });
+  // };
+
   removeCityListItem = (id) => {
     this.setState((state) => ({
       cityList: state.cityList.filter((city) => city.id !== id),
@@ -94,7 +117,12 @@ class App extends Component {
   addCityToList = () => {
     const newCity = this.state.cityName;
 
-    if (newCity === "" || this.state.cityList.length === 0) {
+    if (
+      newCity === ""
+      // ||
+      // this.state.cityList === null ||
+      // this.state.cityList.length === 0
+    ) {
       return;
     }
 
@@ -121,7 +149,7 @@ class App extends Component {
       );
     } else {
       return (
-        <div className="app-style">
+        <div>
           <UpdateCityName
             cityList={this.state.cityList}
             cityName={this.state.cityName}

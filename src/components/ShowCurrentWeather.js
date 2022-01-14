@@ -6,9 +6,12 @@ class ShowCurrentWeather extends Component {
     let imgURL = `https://openweathermap.org/img/wn/${imgIcon}@2x.png`;
 
     return (
-      <div className="text-center">
+      <div className="current-weather-container">
         <p className="larger-text">{this.props.currentWeather.name}</p>
-        <p className="display-2" style={{ letterSpacing: "-5px" }}>
+        <p
+          className="current-weather-container__temp"
+          style={{ letterSpacing: "-5px" }}
+        >
           &nbsp;{Math.round(this.props.currentWeather.main.temp)}&#176;
         </p>
         <img

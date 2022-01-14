@@ -10,21 +10,19 @@ const DayCard = ({ reading }) => {
   let imgURL = `https://openweathermap.org/img/wn/${imgIcon}@2x.png`;
 
   return (
-    <div className="center-forecast">
-      <div className="day-container">
-        <div>
-          <p>{moment(newDate).format("dddd")}</p>
-        </div>
-        <div>
-          <img
-            src={imgURL}
-            style={{ width: "30px" }}
-            alt={reading.weather[0].description}
-          />
-          <p style={{ display: "inline" }}>{Math.round(reading.main.temp)} °</p>
-        </div>
+    // <div className="center-forecast">
+    <div className="day-card">
+      <div>
+        <p>{moment(newDate).format("dddd")}</p>
+      </div>
+      <div>
+        <img src={imgURL} alt={reading.weather[0].description} />
+        <p className="day-card__temp" style={{ display: "inline" }}>
+          {Math.round(reading.main.temp)}°
+        </p>
       </div>
     </div>
+    // </div>
   );
 };
 
