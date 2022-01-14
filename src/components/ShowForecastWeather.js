@@ -11,8 +11,10 @@ class ShowForecastWeather extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: "40px" }}>
-        <div>{this.formatDayCards()}</div>
+      <div className="day-card-container">
+        {/* <div> */}
+        {this.formatDayCards()}
+        {/* </div> */}
       </div>
     );
   }

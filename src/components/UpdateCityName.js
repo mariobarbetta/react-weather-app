@@ -70,7 +70,7 @@ class UpdateCityName extends Component {
               borderRadius: "0 9px 9px 0",
             }}
           >
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onSubmit} autocomplete="off">
               <input
                 ref={(input) => input && input.focus()}
                 className="city-input"
@@ -83,25 +83,26 @@ class UpdateCityName extends Component {
               />
               <input className="button" type="submit" value="+" />
               <div className="city-list">
-                {this.props.cityList.map((city) => (
-                  <p key={city.id}>
-                    <input
-                      name="cityListInput"
-                      type="button"
-                      value={city.cityListItem}
-                      //   onClick={this.handleChange}
-                      onClick={this.handleCityListInputClick}
-                    />
-                    <input
-                      className="button"
-                      type="button"
-                      value="-"
-                      onClick={() => {
-                        this.handleRemove(city.id);
-                      }}
-                    />
-                  </p>
-                ))}
+                {this.props.cityList &&
+                  this.props.cityList.map((city) => (
+                    <p key={city.id}>
+                      <input
+                        name="cityListInput"
+                        type="button"
+                        value={city.cityListItem}
+                        //   onClick={this.handleChange}
+                        onClick={this.handleCityListInputClick}
+                      />
+                      <input
+                        className="button"
+                        type="button"
+                        value="-"
+                        onClick={() => {
+                          this.handleRemove(city.id);
+                        }}
+                      />
+                    </p>
+                  ))}
               </div>
             </form>
           </div>

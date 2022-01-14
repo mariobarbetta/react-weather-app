@@ -1,40 +1,56 @@
+/* Base Styles */
+
 *,
 ::before,
 ::after {
   box-sizing: border-box;
 }
 
-html {
-  font-family: "Exo 2", sans-serif;
-  font-size: 20px;
-  width: 100%;
-  background-color: black;
-}
-
-.app-style {
-  background-color: black;
-  color: whitesmoke;
-}
-
-.spinner-container {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, 0);
-}
-
 p {
-  margin: 0 !important;
+  margin: 0;
 }
 
 ul {
   list-style: none;
 }
 
-.center-forecast {
-  width: 280px;
-  margin: auto;
-  font-size: 0.7rem;
+input:focus {
+  outline: none;
+}
+
+html {
+  font-family: "Exo 2", sans-serif;
+  font-size: 20px;
+
+  width: 100%;
+
+  color: whitesmoke;
+  background-color: black;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, 0);
+}
+
+/* Current Weather */
+
+.current-weather-container {
+  text-align: center;
+}
+
+.current-weather-container__temp {
+  font-size: 5.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.current-weather-container img {
+  margin-top: -15px;
+  margin-bottom: -15px;
 }
 
 .smaller-text {
@@ -45,43 +61,75 @@ ul {
   font-size: 2rem;
 }
 
-.day-container {
+/* Forecast Weather */
+
+.day-card-container {
+  display: block;
+
+  margin-top: 20px;
+}
+
+.day-card {
+  font-size: 0.7rem;
+
   display: flex;
+
+  width: 280px;
+  margin: auto;
+
   justify-content: space-between;
+}
+
+.day-card__temp {
+  position: relative;
+  bottom: 10px;
+  left: 3px;
+}
+
+.day-card img {
+  width: 30px;
 }
 
 /* slide out */
 .button {
-  border: none;
   font-size: 1.2rem;
-  background: transparent;
+
   padding-right: 20px;
+
+  cursor: pointer;
+
+  border: none;
+  background: transparent;
 }
 
 .city-input {
+  font-size: 0.9rem;
+
   margin: 15px;
-  border-radius: 20px;
-  padding-left: 10px;
+  padding: 7px 0 5px 12px;
+
   border: none;
+  border-radius: 20px;
   background-color: rgb(192, 191, 191);
 }
 
-input:focus {
-  outline: none;
-}
-
 .city-list {
-  margin: 0 0 1rem 1.7rem;
-  color: black;
   font-size: 0.85rem;
+
   width: 70%;
+  margin: 0 0 1rem 1.7rem;
+
+  color: black;
 }
 
 .city-list p {
   display: flex;
+
   justify-content: space-between;
 }
 .city-list p input {
+  cursor: pointer;
+
   border: none;
   background: transparent;
 }
@@ -89,4 +137,50 @@ input:focus {
 input:hover {
   color: rgb(255, 255, 255);
   text-shadow: 3 3 1px white;
+}
+
+@media only screen and (min-width: 600px) {
+  .current-weather-container {
+    margin-top: -30px;
+  }
+
+  .current-weather-container__temp {
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .current-weather-container img {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .day-card-container {
+    display: flex;
+
+    margin: 100px 40px 0 40px;
+
+    justify-content: center;
+  }
+
+  .day-card {
+    font-size: 1.2rem;
+
+    flex-direction: column;
+
+    width: 150px;
+    margin: 0 15px;
+
+    text-align: center;
+  }
+
+  .day-card__temp {
+    bottom: 0;
+  }
+
+  .day-card img {
+    display: block;
+
+    width: 60px;
+    margin: auto;
+  }
 }
